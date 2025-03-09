@@ -8,6 +8,7 @@ import software.amazon.awssdk.services.s3.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,32 @@ public class S3Service {
                         .build(),
                 RequestBody.fromInputStream(file.getInputStream(), file.getSize())
         );
+    }
+
+    public void deleteObject(String bucketName, String key) {
+        DeleteObjectRequest request = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+        s3Client.deleteObject(request);
+    }
+
+    public byte[] downloadFile(String bucketName, String key) {
+        GetObjectRequest request = GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+        return s3Client.getObjectAsBytes(request).asByteArray();
+    }
+
+    public void copyObject(String sourceBucket, String sourceKey, String destinationBucket, String destinationKey) {
+        CopyObjectRequest request = CopyObjectRequest.builder()
+                .sourceBucket(sourceBucket)
+                .sourceKey(sourceKey)
+                .destinationBucket(destinationBucket)
+                .destinationKey(destinationKey)
+                .build();
+        s3Client.copyObject(request);
     }
 
 }
