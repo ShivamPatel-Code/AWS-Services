@@ -48,7 +48,6 @@ public class S3Controller {
     @DeleteMapping("/delete/object")
     public ResponseEntity<String> addFile(@RequestParam("bucketName") String bucketName,
                                           @RequestParam("key") String key){
-
             try {
                 s3Service.deleteObject(bucketName, key);
                 return ResponseEntity.ok("File uploaded successfully.");
@@ -77,5 +76,13 @@ public class S3Controller {
         String destinationKey = payload.get("destinationKey");
         s3Service.copyObject(sourceBucket, sourceKey, destinationBucket, destinationKey);
         return ResponseEntity.ok("Object copied successfully.");
+    }
+
+    // Generate a pre-signed URL for downloading an object
+    @GetMapping("/presignedUrl")
+    public ResponseEntity<?> generatePresignedUrl(@RequestParam String bucketName,
+                                                       @RequestParam String key,
+                                                       @RequestParam(defaultValue = "300") long expirationSeconds) {
+        return s3Service.generatePresignedUrl(bucketName, key, expirationSeconds);
     }
 }
