@@ -1,0 +1,632 @@
+{
+	"info": {
+		"_postman_id": "d1ab40e0-e09e-4716-8068-6a7a10e4dd66",
+		"name": "aws-services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19211140"
+	},
+	"item": [
+		{
+			"name": "s3",
+			"item": [
+				{
+					"name": "getBuckets",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/buckets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"buckets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getObjects",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/objects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"objects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadFile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "200Thrds.png",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/shivampatel/Desktop/Tests/200Thrds.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteObject",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "200Thrds.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/delete/object",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"delete",
+								"object"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadObject",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `",
+									"<canvas id=\"myChart\" height=\"75\"></canvas>",
+									"",
+									"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> ",
+									"",
+									"<script>",
+									"    var ctx = document.getElementById(\"myChart\");",
+									"",
+									"    var myChart = new Chart(ctx, {",
+									"        type: \"pie\",",
+									"        data: {",
+									"            labels: [],",
+									"            datasets: [{",
+									"                data: [],",
+									"                backgroundColor: [\"#003f5c\", \"#58508d\", \"#bc5090\", \"#ff6361\", \"#ffa600\"],",
+									"            }]",
+									"        },",
+									"        options: {",
+									"            title: {",
+									"                display: true,",
+									"                text: 'Response Data'",
+									"            },",
+									"        }",
+									"",
+									"    });",
+									"",
+									"    pm.getData(function (err, value) {",
+									"        myChart.data.labels = value.response.map((item, index) => 'Value ' + index);",
+									"        myChart.data.datasets[0].data = value.response;",
+									"        myChart.update();",
+									"    });",
+									"",
+									"</script>`;",
+									"function constructVisualizerPayload() {",
+									"    var res = pm.response.json();",
+									"    return { response: res }",
+									"}",
+									"",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "Early Talent Program.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/download",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"download"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generatePresignedUrl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `",
+									"<canvas id=\"myChart\" height=\"75\"></canvas>",
+									"",
+									"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> ",
+									"",
+									"<script>",
+									"    var ctx = document.getElementById(\"myChart\");",
+									"",
+									"    var myChart = new Chart(ctx, {",
+									"        type: \"pie\",",
+									"        data: {",
+									"            labels: [],",
+									"            datasets: [{",
+									"                data: [],",
+									"                backgroundColor: [\"#003f5c\", \"#58508d\", \"#bc5090\", \"#ff6361\", \"#ffa600\"],",
+									"            }]",
+									"        },",
+									"        options: {",
+									"            title: {",
+									"                display: true,",
+									"                text: 'Response Data'",
+									"            },",
+									"        }",
+									"",
+									"    });",
+									"",
+									"    pm.getData(function (err, value) {",
+									"        myChart.data.labels = value.response.map((item, index) => 'Value ' + index);",
+									"        myChart.data.datasets[0].data = value.response;",
+									"        myChart.update();",
+									"    });",
+									"",
+									"</script>`;",
+									"function constructVisualizerPayload() {",
+									"    var res = pm.response.json();",
+									"    return { response: res }",
+									"}",
+									"",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "Early Talent Program.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/presignedUrl",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"presignedUrl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "copyObjectsToAnotherBucket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `",
+									"<canvas id=\"myChart\" height=\"75\"></canvas>",
+									"",
+									"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> ",
+									"",
+									"<script>",
+									"    var ctx = document.getElementById(\"myChart\");",
+									"",
+									"    var myChart = new Chart(ctx, {",
+									"        type: \"pie\",",
+									"        data: {",
+									"            labels: [],",
+									"            datasets: [{",
+									"                data: [],",
+									"                backgroundColor: [\"#003f5c\", \"#58508d\", \"#bc5090\", \"#ff6361\", \"#ffa600\"],",
+									"            }]",
+									"        },",
+									"        options: {",
+									"            title: {",
+									"                display: true,",
+									"                text: 'Response Data'",
+									"            },",
+									"        }",
+									"",
+									"    });",
+									"",
+									"    pm.getData(function (err, value) {",
+									"        myChart.data.labels = value.response.map((item, index) => 'Value ' + index);",
+									"        myChart.data.datasets[0].data = value.response;",
+									"        myChart.update();",
+									"    });",
+									"",
+									"</script>`;",
+									"function constructVisualizerPayload() {",
+									"    var res = pm.response.json();",
+									"    return { response: res }",
+									"}",
+									"",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sourceBucket\": \"aws-services-project\",\n  \"sourceKey\": \"temp.png\",\n  \"destinationBucket\": \"test-object-migration\",\n  \"destinationKey\": \"copiedFile.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/s3/copy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"s3",
+								"copy"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sqs",
+			"item": [
+				{
+					"name": "sendMessage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "Early Talent Program.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/sqs/send?queueUrl=https://sqs.{{region}}.amazonaws.com/{{account_id}}/{{queue_name}}&message=Message number 6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"sqs",
+								"send"
+							],
+							"query": [
+								{
+									"key": "queueUrl",
+									"value": "https://sqs.{{region}}.amazonaws.com/{{account_id}}/{{queue_name}}"
+								},
+								{
+									"key": "message",
+									"value": "Message number 6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMessage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"queueUrl\": \"\",\n    \"receiptHandle\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/sqs/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"sqs",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "receiveMessage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bucketName",
+									"value": "aws-services-project",
+									"type": "text"
+								},
+								{
+									"key": "key",
+									"value": "Early Talent Program.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/aws/sqs/receive?queueUrl=https://sqs.{{region}}.amazonaws.com/{{account_id}}/{{queue_name}}&maxMessages=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"aws",
+								"sqs",
+								"receive"
+							],
+							"query": [
+								{
+									"key": "queueUrl",
+									"value": "https://sqs.{{region}}.amazonaws.com/{{account_id}}/{{queue_name}}"
+								},
+								{
+									"key": "maxMessages",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
