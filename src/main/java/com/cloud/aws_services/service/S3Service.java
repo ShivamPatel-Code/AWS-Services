@@ -1,38 +1,28 @@
 package com.cloud.aws_services.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class S3Service {
     private final S3Client s3Client;
-    private final Region region;
     private final S3Presigner s3Presigner;
-
-    public S3Service(S3Client s3Client, @Value("${aws.region}") String regionStr, S3Presigner s3Presigner) {
-        this.s3Client = s3Client;
-        this.region = Region.of(regionStr);
-        this.s3Presigner = s3Presigner;
-    }
 
     public List<String> listBuckets(){
         ListBucketsResponse bucketsResponse = s3Client.listBuckets();
@@ -90,7 +80,6 @@ public class S3Service {
 
     // Generate a pre-signed URL valid for a specified duration (in seconds)
     public ResponseEntity<?> generatePresignedUrl(String bucketName, String key, long expirationSeconds) {
-        // Create an S3Presigner instance
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(bucketName)
