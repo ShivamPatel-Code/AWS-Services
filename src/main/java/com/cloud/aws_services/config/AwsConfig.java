@@ -52,20 +52,4 @@ public class AwsConfig {
                 .credentialsProvider(credentialsProvider())
                 .build();
     }
-
-    @Bean
-    public SnsClient snsClient() {
-        return SnsClient.builder()
-                .region(Region.of(region))
-                .credentialsProvider(credentialsProvider())
-                .build();
-    }
-
-    @Bean
-    public DynamoDbClient dynamoDbClient() {
-        return DynamoDbClient.builder()
-                .region(Region.of(region))
-                .credentialsProvider(credentialsProvider())
-                .build();
-    }
 }
